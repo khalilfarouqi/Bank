@@ -21,4 +21,7 @@ public class User {
     private String firstName;
     @OneToMany(mappedBy = "user")
     private List<BankAccountTransaction> bankAccountTransactionList;
+    public User(String userName) {
+        this.userName = userName;
+    }
 }
