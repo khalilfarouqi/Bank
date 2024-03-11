@@ -19,8 +19,11 @@ spring:
       ddl-auto: update
   main:
     allow-bean-definition-overriding: true
+logging:
+  level:
+    org.springframework: DEBUG
 graphql:
   date:
-    format: yyyy-MM-dd HH:mm:ss
+    format: "yyyy-MM-dd HH:mm:ss"
 server:
   port: 8090
