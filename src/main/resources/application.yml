@@ -1,6 +1,6 @@
 spring:
   datasource:
-    url: jdbc:postgresql://localhost:5432/Car_Rental
+    url: jdbc:postgresql://localhost:5432/Bank
     username: postgres
     password: khalil
     #driverClassName: org.postgresql.Driver
@@ -19,9 +19,9 @@ spring:
       ddl-auto: update
   main:
     allow-bean-definition-overriding: true
-logging:
-  level:
-    org.springframework: DEBUG
+  graphql:
+    graphiql:
+      enabled: true
 graphql:
   date:
     format: "yyyy-MM-dd HH:mm:ss"
