@@ -13,7 +13,7 @@ public class AddCustomerResponse {
     private Long id;
     private String message;
     private String userName;
-    private String identifyRef;
+    private String identityRef;
     private String firstName;
     private String lastName;
 }
