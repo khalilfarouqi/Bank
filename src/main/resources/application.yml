@@ -1,0 +1,26 @@
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/Car_Rental
+    username: postgres
+    password: khalil
+    #driverClassName: org.postgresql.Driver
+  data:
+    jpa:
+      repositories:
+        bootstrap-mode: default
+  jpa:
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+    properties:
+      hibernate:
+        globally_quoted_identifiers: true
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+        format_sql: true
+    hibernate:
+      ddl-auto: update
+  main:
+    allow-bean-definition-overriding: true
+graphql:
+  date:
+    format: yyyy-MM-dd HH:mm:ss
+server:
+  port: 8090
