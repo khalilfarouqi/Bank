@@ -2,6 +2,7 @@ package com.bank.bankservice.common;
 
 import lombok.Data;
 import lombok.Value;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Component;
 
 import java.text.ParseException;
@@ -11,7 +12,7 @@ import java.util.Date;
 @Component
 @Data
 public class CommonTools {
-    @Value("${graphql.date.format}")
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private String dateFormat;
     public String dateToString(Date date){
         SimpleDateFormat formatter = new SimpleDateFormat(dateFormat);
