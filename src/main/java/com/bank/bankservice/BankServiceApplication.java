@@ -1,6 +1,6 @@
 package com.bank.bankservice;
 
-import com.bank.bankservice.Services.*;
+import com.bank.bankservice.services.*;
 import com.bank.bankservice.common.dtos.Request.*;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;

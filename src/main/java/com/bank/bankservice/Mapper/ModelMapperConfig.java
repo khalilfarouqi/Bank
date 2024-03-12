@@ -1,4 +1,4 @@
-package com.bank.bankservice.Mapper;
+package com.bank.bankservice.mapper;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.context.annotation.Bean;

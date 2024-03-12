@@ -1,8 +1,8 @@
-package com.bank.bankservice.Services.Implimentation;
+package com.bank.bankservice.services.Implimentation;
 
-import com.bank.bankservice.Repository.BankAccountRepository;
-import com.bank.bankservice.Repository.CustomerRepository;
-import com.bank.bankservice.Services.IBankAccountService;
+import com.bank.bankservice.repository.BankAccountRepository;
+import com.bank.bankservice.repository.CustomerRepository;
+import com.bank.bankservice.services.IBankAccountService;
 import com.bank.bankservice.common.dtos.BankAccountDto;
 import com.bank.bankservice.common.dtos.Request.AddBankAccountRequest;
 import com.bank.bankservice.common.dtos.Response.AddBankAccountResponse;

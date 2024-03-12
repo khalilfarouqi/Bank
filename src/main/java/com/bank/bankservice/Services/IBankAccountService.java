@@ -1,4 +1,4 @@
-package com.bank.bankservice.Services;
+package com.bank.bankservice.services;
 
 import com.bank.bankservice.common.dtos.BankAccountDto;
 import com.bank.bankservice.common.dtos.Request.AddBankAccountRequest;

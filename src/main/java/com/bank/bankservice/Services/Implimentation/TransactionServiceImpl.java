@@ -1,7 +1,7 @@
-package com.bank.bankservice.Services.Implimentation;
+package com.bank.bankservice.services.Implimentation;
 
-import com.bank.bankservice.Repository.*;
-import com.bank.bankservice.Services.ITransactionService;
+import com.bank.bankservice.repository.*;
+import com.bank.bankservice.services.ITransactionService;
 import com.bank.bankservice.common.dtos.Request.*;
 import com.bank.bankservice.common.dtos.Response.*;
 import com.bank.bankservice.common.dtos.TransactionDto;
