@@ -12,16 +12,16 @@ import java.util.List;
 @AllArgsConstructor
 @Data
 @Inheritance(strategy = InheritanceType.JOINED)
-public class User {
+public class Users {
     @Id
     @GeneratedValue
     private Long id;
     private String lastName;
     private String userName;
     private String firstName;
-    @OneToMany(mappedBy = "user")
+    @OneToMany(mappedBy = "users")
     private List<BankAccountTransaction> bankAccountTransactionList;
-    public User(String userName) {
+    public Users(String userName) {
         this.userName = userName;
     }
 }

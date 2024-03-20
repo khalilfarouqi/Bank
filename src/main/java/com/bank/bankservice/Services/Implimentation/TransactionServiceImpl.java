@@ -8,7 +8,7 @@ import com.bank.bankservice.common.dtos.TransactionDto;
 import com.bank.bankservice.entity.BankAccount;
 import com.bank.bankservice.entity.BankAccountTransaction;
 import com.bank.bankservice.entity.GetTransactionListBo;
-import com.bank.bankservice.entity.User;
+import com.bank.bankservice.entity.Users;
 import com.bank.bankservice.entity.enums.AccountStatus;
 import com.bank.bankservice.entity.enums.TransactionType;
 import com.bank.bankservice.exception.BusinessException;
@@ -60,19 +60,19 @@ public class TransactionServiceImpl implements ITransactionService {
                 amount(dto.getAmount()).
                 transactionType(TransactionType.DEBIT).
                 bankAccount(BankAccount.builder().rib(dto.getRibFrom()).build()).
-                user(new User(dto.getUserName())).
+                users(new Users(dto.getUserName())).
                 build();
         BankAccountTransaction transactionTo = BankAccountTransaction.builder().
                 amount(dto.getAmount()).
                 transactionType(TransactionType.CREDIT).
                 bankAccount(BankAccount.builder().rib(dto.getRibTo()).build()).
-                user(new User(dto.getUserName())).
+                users(new Users(dto.getUserName())).
                 build();
-        String username = transactionFrom.getUser().getUserName();
+        String username = transactionFrom.getUsers().getUserName();
         String ribFrom = transactionFrom.getBankAccount().getRib();
         String ribTo = transactionTo.getBankAccount().getRib();
         Double amount = transactionFrom.getAmount();
-        User user = userRepository.findByUserName(username).
+        Users users = userRepository.findByUserName(username).
                 orElseThrow(() -> new BusinessException(String.format("User [%s] doesn't exist", username)));
         BankAccount bankAccountFrom = bankAccountRepository.findByRib(ribFrom).
                 orElseThrow(() -> new BusinessException(String.format("No bank account have the rib %s", ribFrom)));
@@ -84,10 +84,10 @@ public class TransactionServiceImpl implements ITransactionService {
 //On crédite le compte destinataire
         bankAccountTo.setAmount(bankAccountTo.getAmount() + amount);
         transactionFrom.setCreatedAt(new Date());
-        transactionFrom.setUser(user);
+        transactionFrom.setUsers(users);
         transactionFrom.setBankAccount(bankAccountFrom);
         transactionTo.setCreatedAt(new Date());
-        transactionTo.setUser(user);
+        transactionTo.setUsers(users);
         transactionTo.setBankAccount(bankAccountTo);
         bankAccountTransactionRepository.save(transactionFrom);
         bankAccountTransactionRepository.save(transactionTo);

@@ -15,9 +15,9 @@ import java.util.List;
 @Getter
 @Setter
 @PrimaryKeyJoinColumn(name = "id")
-public class Customer extends User {
+public class Customer extends Users {
     @Column(unique = true)
     private String identityRef;
     @OneToMany(mappedBy = "customer")
-    private List<BankAccount> BankAccounts;
+    private List<BankAccount> bankAccounts;
 }

@@ -15,5 +15,5 @@ public class TransactionDto {
     private String transactionType;
     private Double amount;
     private BankAccountDto bankAccount;
-    private UserDto user;
+    private UsersDto users;
 }

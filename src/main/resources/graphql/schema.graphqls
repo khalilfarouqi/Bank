@@ -30,11 +30,10 @@ type TransactionDto {
     transactionType:TransactionType,
     amount:Float,
     bankAccount:BankAccountDto
-    user:userDto
+    users:usersDto
 }
-type userDto {
+type usersDto {
     username:String
-     30
     firstname:String
     lastname:String
 }

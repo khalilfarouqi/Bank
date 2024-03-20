@@ -26,5 +26,5 @@ public class BankAccountTransaction {
     @ManyToOne
     private BankAccount bankAccount;
     @ManyToOne
-    private User user;
+    private Users users;
 }
