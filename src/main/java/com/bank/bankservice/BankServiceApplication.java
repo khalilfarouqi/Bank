@@ -14,7 +14,7 @@ public class BankServiceApplication {
         SpringApplication.run(BankServiceApplication.class, args);
     }
 
-    @Bean
+    /*@Bean
     CommandLineRunner initDataBase(ICustomerService customerService,
                                    IBankAccountService bankAccountService,
                                    ITransactionService transactionService) {
@@ -93,5 +93,5 @@ public class BankServiceApplication {
                     userName("user2").
                     build());
         };
-    }
+    }*/
 }
