@@ -33,7 +33,7 @@ public class CustomerServiceImpl implements ICustomerService {
     public AddCustomerResponse createCustomer(AddCustomerRequest addCustomerRequest) {
         Customer customer = modelMapper.map(addCustomerRequest, Customer.class);
         String identityRef = customer.getIdentityRef();
-        String username = customer.getUserName();
+        String username = customer.getUsername();
         customerRepository.findByIdentityRef(identityRef)
                 .ifPresent(a ->{
                     throw new BusinessException(String.format("Customer with the same identity [%s] exist", identityRef));
@@ -100,7 +100,7 @@ public class CustomerServiceImpl implements ICustomerService {
     public CustomerDto save(CustomerDto dto) {
         Customer customer = modelMapper.map(dto, Customer.class);
         String identityRef = customer.getIdentityRef();
-        String username = customer.getUserName();
+        String username = customer.getUsername();
         customerRepository.findByIdentityRef(identityRef)
                 .ifPresent(a ->{
                     throw new BusinessException(String.format("Customer with the same identity [%s] exist", identityRef));
@@ -116,7 +116,7 @@ public class CustomerServiceImpl implements ICustomerService {
     public CustomerDto update(CustomerDto dto) {
         Customer customer = modelMapper.map(dto, Customer.class);
         String identityRef = customer.getIdentityRef();
-        String username = customer.getUserName();
+        String username = customer.getUsername();
         customerRepository.findByIdentityRef(identityRef)
                 .ifPresent(a ->{
                     throw new BusinessException(String.format("Customer with the same identity [%s] exist", identityRef));
