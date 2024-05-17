@@ -2,31 +2,24 @@ package com.bank.bankservice.services.Implimentation;
 
 import com.bank.bankservice.common.dtos.UsersDto;
 import com.bank.bankservice.entity.Users;
-import com.bank.bankservice.entity.enums.Profile;
 import com.bank.bankservice.repository.UserRepository;
 import com.bank.bankservice.services.IUserService;
 import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import org.modelmapper.ModelMapper;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.List;
-import java.util.Optional;
-import java.util.stream.Collectors;
+import java.util.*;
 
 @Service
 @Transactional
 @AllArgsConstructor
 public class UserServiceImpl implements IUserService, UserDetailsService {
-    private final UserRepository userRepository;
+    private UserRepository userRepository;
     private ModelMapper modelMapper;
 
     @Override
@@ -68,26 +61,14 @@ public class UserServiceImpl implements IUserService, UserDetailsService {
 
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         Users user = userRepository.findByUserName(username)
-                .orElseThrow(() -> new UsernameNotFoundException("User not found: " + username));
-        return Users.builder()
-                .userName(user.getUsername())
-                .password(user.getPassword())
-                //.authorities(user.getRoles()) // Ensure roles are correctly handled
-                .build();
-        /*return new Users(
-                user.getUsername(),
-                user.getPassword(),
-                user.isEnabled(),
-                user.isAccountNonExpired(),
-                user.isCredentialsNonExpired(),
-                user.isAccountNonLocked(),
-                user.getProfile().stream()
-                        .map(role -> new SimpleGrantedAuthority(role.name()))
-                        .collect(Collectors.toList())
-        );*/
+                .orElseThrow(() -> new UsernameNotFoundException("User not found"));
+        return new org.springframework.security.core.userdetails.User(user.getUsername(), user.getPassword(), getAuthority(user));
+
     }
 
-    //private Collection<? extends GrantedAuthority> getAuthorities() {
-    //    return List.of(() -> "ROLE_" + profile.name());
-    //}
+    private Set<SimpleGrantedAuthority> getAuthority(Users user) {
+        Set<SimpleGrantedAuthority> authorities = new HashSet<>();
+        authorities.add(new SimpleGrantedAuthority("ROLE_" + user.getProfile().name()));
+        return authorities;
+    }
 }
