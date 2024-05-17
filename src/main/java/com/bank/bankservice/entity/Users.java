@@ -6,7 +6,9 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
@@ -32,6 +34,10 @@ public class Users implements UserDetails {
     private List<BankAccountTransaction> bankAccountTransactionList;
     public Users(String userName) {
         this.userName = userName;
+    }
+    public Users(String userName, Profile profile) {
+        this.userName = userName;
+        this.profile = profile;
     }
 
     @Override
