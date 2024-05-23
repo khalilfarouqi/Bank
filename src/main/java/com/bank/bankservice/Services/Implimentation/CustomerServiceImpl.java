@@ -1,5 +1,9 @@
 package com.bank.bankservice.services.Implimentation;
 
+import com.bank.bankservice.common.config.JsonProperties;
+import com.bank.bankservice.common.config.SecurityConfig;
+import com.bank.bankservice.entity.enums.Profile;
+import com.bank.bankservice.mail.services.MailService;
 import com.bank.bankservice.repository.CustomerRepository;
 import com.bank.bankservice.services.ICustomerService;
 import com.bank.bankservice.common.dtos.CustomerDto;
@@ -23,18 +27,27 @@ import java.util.stream.Collectors;
 @AllArgsConstructor
 public class CustomerServiceImpl implements ICustomerService {
     private final CustomerRepository customerRepository;
+    private final MailService mailService;
     private final ModelMapper modelMapper;
+    private final JsonProperties jsonProperties;
+    private final SecurityConfig securityConfig;
+
+    //@Autowired
+    //private PasswordEncoder passwordEncoder;
 
     public List<CustomerDto> getAllCustomers() {
         return customerRepository.findAll().stream()
                 .map(customer -> modelMapper.map(customer, CustomerDto.class)).
                 collect(Collectors.toList());    }
+
     @Override
     public AddCustomerResponse createCustomer(AddCustomerRequest addCustomerRequest) {
         Customer customer = modelMapper.map(addCustomerRequest, Customer.class);
         String identityRef = customer.getIdentityRef();
         String username = customer.getUserName();
         String email = customer.getEmail();
+        customer.setPassword(securityConfig.generateRandomPassword());
+        customer.setProfile(Profile.CLIENT);
         customerRepository.findByIdentityRef(identityRef)
                 .ifPresent(a ->{
                     throw new BusinessException(String.format("Customer with the same identity [%s] exist", identityRef));
@@ -50,6 +63,13 @@ public class CustomerServiceImpl implements ICustomerService {
         AddCustomerResponse response = modelMapper.map(customerRepository.save(customer), AddCustomerResponse.class);
         response.setMessage(String.format("Customer : [identity= %s,First Name= %s, Last Name= %s, username= %s] was created with success",
                 response.getIdentityRef(), response.getFirstName(), response.getLastName(), response.getUsername()));
+
+        try {
+            mailService.sendLoginPasswordMail(email, jsonProperties.getNewCustomerSubject().replaceAll("[\",]", ""), response);
+        } catch (Exception e) {
+            throw new RuntimeException(e.getMessage());
+        }
+
         return response;
     }
 
@@ -142,4 +162,5 @@ public class CustomerServiceImpl implements ICustomerService {
         }
         return "Customer was not found";
     }
+
 }
