@@ -51,7 +51,8 @@ input AddCustomerRequest {
     identityRef:String,
     address:String,
     dateOfBirth:String,
-    username:String
+    username:String,
+    password:String
 }
 input UpdateCustomerRequest {
     username:String,
@@ -73,7 +74,8 @@ type AddCustomerResponse {
     identityRef:String,
     address:String,
     dateOfBirth:String,
-    username:String
+    username:String,
+    password:String
 }
 input AddBankAccountRequest {
     rib:String,

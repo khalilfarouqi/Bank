@@ -19,4 +19,5 @@ public class AddCustomerRequest {
     private String address;
     private Date dateOfBirth;
     private String username;
+    private String password;
 }

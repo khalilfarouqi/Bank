@@ -21,4 +21,5 @@ public class AddCustomerResponse {
     private String address;
     private Date dateOfBirth;
     private String username;
+    private String password;
 }
