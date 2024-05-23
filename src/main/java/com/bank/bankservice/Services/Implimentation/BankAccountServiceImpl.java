@@ -34,10 +34,8 @@ public class BankAccountServiceImpl implements IBankAccountService {
         bankAccount.setAccountStatus(AccountStatus.OPENED);
         bankAccount.setCustomer(customerP);
         bankAccount.setCreatedAt(new Date());
-        AddBankAccountResponse response = modelMapper.map(bankAccountRepository.save(bankAccount),
-                AddBankAccountResponse.class);
-        response.setMessage(String.format("RIB number [%s] for the customer [%s] has been successfully created",
-                dto.getRib(), dto.getCustomerIdentityRef()));
+        AddBankAccountResponse response = modelMapper.map(bankAccountRepository.save(bankAccount), AddBankAccountResponse.class);
+        response.setMessage(String.format("RIB number [%s] for the customer [%s] has been successfully created", dto.getRib(), dto.getCustomerIdentityRef()));
         return response;
     }
 
