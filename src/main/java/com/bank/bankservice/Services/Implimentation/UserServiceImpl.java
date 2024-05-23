@@ -7,19 +7,16 @@ import com.bank.bankservice.services.IUserService;
 import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import org.modelmapper.ModelMapper;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
-import java.util.*;
+import java.util.List;
+import java.util.Optional;
 
 @Service
 @Transactional
 @AllArgsConstructor
-public class UserServiceImpl implements IUserService, UserDetailsService {
-    private UserRepository userRepository;
+public class UserServiceImpl implements IUserService {
+    private final UserRepository userRepository;
     private ModelMapper modelMapper;
 
     @Override
@@ -57,18 +54,5 @@ public class UserServiceImpl implements IUserService, UserDetailsService {
 
     public Optional<Users> findByPassword(String password) {
         return userRepository.findByPassword(password);
-    }
-
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        Users user = userRepository.findByUserName(username)
-                .orElseThrow(() -> new UsernameNotFoundException("User not found"));
-        return new org.springframework.security.core.userdetails.User(user.getUsername(), user.getPassword(), getAuthority(user));
-
-    }
-
-    private Set<SimpleGrantedAuthority> getAuthority(Users user) {
-        Set<SimpleGrantedAuthority> authorities = new HashSet<>();
-        authorities.add(new SimpleGrantedAuthority("ROLE_" + user.getProfile().name()));
-        return authorities;
     }
 }

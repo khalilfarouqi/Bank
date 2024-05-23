@@ -6,6 +6,7 @@ import jakarta.persistence.OneToMany;
 import jakarta.persistence.PrimaryKeyJoinColumn;
 import lombok.*;
 
+import java.util.Date;
 import java.util.List;
 
 @Entity
@@ -15,6 +16,10 @@ import java.util.List;
 @Setter
 @PrimaryKeyJoinColumn(name = "id")
 public class Customer extends Users {
+    private Date dateOfBirth;
+    private String email;
+    private String address;
+
     @Column(unique = true)
     private String identityRef;
     @OneToMany(mappedBy = "customer")

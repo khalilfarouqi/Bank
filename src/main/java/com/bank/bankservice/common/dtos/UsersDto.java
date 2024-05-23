@@ -6,14 +6,16 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.Date;
+
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
 @Data
 public class UsersDto {
-    protected String firstName;
-    protected String lastName;
-    protected String userName;
-    protected String password;
-    protected Profile profile;
+    private String lastName;
+    private String firstName;
+    private String userName;
+    private String password;
+    private Profile profile;
 }

@@ -68,7 +68,7 @@ public class TransactionServiceImpl implements ITransactionService {
                 bankAccount(BankAccount.builder().rib(dto.getRibTo()).build()).
                 users(new Users(dto.getUserName())).
                 build();
-        String username = transactionFrom.getUsers().getUsername();
+        String username = transactionFrom.getUsers().getUserName();
         String ribFrom = transactionFrom.getBankAccount().getRib();
         String ribTo = transactionTo.getBankAccount().getRib();
         Double amount = transactionFrom.getAmount();

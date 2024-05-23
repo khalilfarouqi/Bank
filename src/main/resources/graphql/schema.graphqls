@@ -15,8 +15,9 @@ type Mutation {
 type CustomerDto {
     username:String,
     identityRef:String,
-    firstname:String,
-    lastname:String,
+    firstName:String,
+    lastName:String,
+    address:String,
 }
 type BankAccountDto {
     rib:String,
@@ -44,10 +45,13 @@ enum TransactionType {
     CREDIT,DEBIT
 }
 input AddCustomerRequest {
-    username:String,
+    firstName:String,
+    lastName:String,
+    email:String,
     identityRef:String,
-    firstname:String,
-    lastname:String
+    address:String,
+    dateOfBirth:String,
+    username:String
 }
 input UpdateCustomerRequest {
     username:String,
@@ -63,11 +67,13 @@ type UpdateCustomerResponse {
     lastname:String
 }
 type AddCustomerResponse {
-    message:String,
-    username:String,
+    firstName:String,
+    lastName:String,
+    email:String,
     identityRef:String,
-    firstname:String,
-    lastname:String
+    address:String,
+    dateOfBirth:String,
+    username:String
 }
 input AddBankAccountRequest {
     rib:String,

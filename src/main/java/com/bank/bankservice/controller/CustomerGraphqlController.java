@@ -7,10 +7,12 @@ import com.bank.bankservice.services.Implimentation.CustomerServiceImpl;
 import lombok.AllArgsConstructor;
 import org.springframework.graphql.data.method.annotation.*;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.CrossOrigin;
 
 import java.util.List;
 
 @Controller
+@CrossOrigin(origins = "*")
 public class CustomerGraphqlController {
     private final CustomerServiceImpl customerServiceImpl;
     public CustomerGraphqlController(CustomerServiceImpl customerServiceImpl) {

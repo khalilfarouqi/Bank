@@ -33,10 +33,15 @@ public class CustomerServiceImpl implements ICustomerService {
     public AddCustomerResponse createCustomer(AddCustomerRequest addCustomerRequest) {
         Customer customer = modelMapper.map(addCustomerRequest, Customer.class);
         String identityRef = customer.getIdentityRef();
-        String username = customer.getUsername();
+        String username = customer.getUserName();
+        String email = customer.getEmail();
         customerRepository.findByIdentityRef(identityRef)
                 .ifPresent(a ->{
                     throw new BusinessException(String.format("Customer with the same identity [%s] exist", identityRef));
+                });
+        customerRepository.findByEmail(email)
+                .ifPresent(a ->{
+                    throw new BusinessException(String.format("Customer with the same email [%s] exist", email));
                 });
         customerRepository.findByUserName(username)
                 .ifPresent(a ->{
@@ -44,7 +49,7 @@ public class CustomerServiceImpl implements ICustomerService {
                 });
         AddCustomerResponse response = modelMapper.map(customerRepository.save(customer), AddCustomerResponse.class);
         response.setMessage(String.format("Customer : [identity= %s,First Name= %s, Last Name= %s, username= %s] was created with success",
-                response.getIdentityRef(), response.getFirstName(), response.getLastName(), response.getUserName()));
+                response.getIdentityRef(), response.getFirstName(), response.getLastName(), response.getUsername()));
         return response;
     }
 
@@ -100,7 +105,7 @@ public class CustomerServiceImpl implements ICustomerService {
     public CustomerDto save(CustomerDto dto) {
         Customer customer = modelMapper.map(dto, Customer.class);
         String identityRef = customer.getIdentityRef();
-        String username = customer.getUsername();
+        String username = customer.getUserName();
         customerRepository.findByIdentityRef(identityRef)
                 .ifPresent(a ->{
                     throw new BusinessException(String.format("Customer with the same identity [%s] exist", identityRef));
@@ -116,7 +121,7 @@ public class CustomerServiceImpl implements ICustomerService {
     public CustomerDto update(CustomerDto dto) {
         Customer customer = modelMapper.map(dto, Customer.class);
         String identityRef = customer.getIdentityRef();
-        String username = customer.getUsername();
+        String username = customer.getUserName();
         customerRepository.findByIdentityRef(identityRef)
                 .ifPresent(a ->{
                     throw new BusinessException(String.format("Customer with the same identity [%s] exist", identityRef));
