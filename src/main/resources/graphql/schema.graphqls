@@ -97,7 +97,8 @@ input AddWirerTransferRequest {
     ribFrom:String,
     ribTo:String,
     amount:Float,
-    username:String
+    userName:String,
+
 }
 type AddWiredTransferResponse {
     message:String,

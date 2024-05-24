@@ -79,9 +79,9 @@ public class TransactionServiceImpl implements ITransactionService {
         BankAccount bankAccountTo = bankAccountRepository.findByRib(ribTo).
                 orElseThrow(() -> new BusinessException(String.format("No bank account have the rib %s", ribTo)));
         checkBusinessRules(bankAccountFrom, bankAccountTo, amount);
-//On débite le compte demandeur
+        //On débite le compte demandeur
         bankAccountFrom.setAmount(bankAccountFrom.getAmount() - amount);
-//On crédite le compte destinataire
+        //On crédite le compte destinataire
         bankAccountTo.setAmount(bankAccountTo.getAmount() + amount);
         transactionFrom.setCreatedAt(new Date());
         transactionFrom.setUsers(users);
