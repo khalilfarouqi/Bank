@@ -3,6 +3,8 @@ type Query{
     customerByIdentity(identity:String):CustomerDto
     bankAccounts:[BankAccountDto]
     bankAccountByRib (rib:String):BankAccountDto
+    bankAccountById (id:ID):[BankAccountDto]
+    getTop10TransactionsById (id:ID):[TransactionDto]
     getTransactions (dto:GetTransactionListRequest):[TransactionDto]
 }
 type Mutation {
@@ -20,6 +22,7 @@ type CustomerDto {
     address:String,
 }
 type BankAccountDto {
+    id: String,
     rib:String,
     amount:Float,
     createdAt:String,
@@ -34,9 +37,9 @@ type TransactionDto {
     users:usersDto
 }
 type usersDto {
-    username:String
-    firstname:String
-    lastname:String
+    userName:String
+    firstName:String
+    lastName:String
 }
 enum AccountStatus {
     OPENED, CLOSED, BLOCKED

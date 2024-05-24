@@ -33,6 +33,7 @@ public class BankAccountServiceImpl implements IBankAccountService {
                         () -> new BusinessException(String.format("No customer with the identity: %s exist", dto.getCustomerIdentityRef())));
         bankAccount.setAccountStatus(AccountStatus.OPENED);
         bankAccount.setCustomer(customerP);
+        bankAccount.setAmount((double) 0);
         bankAccount.setCreatedAt(new Date());
         AddBankAccountResponse response = modelMapper.map(bankAccountRepository.save(bankAccount), AddBankAccountResponse.class);
         response.setMessage(String.format("RIB number [%s] for the customer [%s] has been successfully created", dto.getRib(), dto.getCustomerIdentityRef()));
@@ -50,6 +51,12 @@ public class BankAccountServiceImpl implements IBankAccountService {
     public BankAccountDto getBankAccountByRib(String rib) {
         return modelMapper.map(bankAccountRepository.findByRib(rib).orElseThrow(
                 () -> new BusinessException(String.format("No Bank Account with rib [%s] exist", rib))), BankAccountDto.class);
+    }
+
+    public List<BankAccountDto> findByCustomerId(Long id) {
+        return bankAccountRepository.findByCustomerId(id).stream()
+                .map(bankAccount -> modelMapper.map(bankAccount, BankAccountDto.class))
+                .collect(Collectors.toList());
     }
 
     @Override

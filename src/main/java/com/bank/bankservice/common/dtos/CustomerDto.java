@@ -18,4 +18,8 @@ public class CustomerDto {
     private Date dateOfBirth;
     private String email;
     private String address;
+
+    private String username;
+    private String firstName;
+    private String lastName;
 }

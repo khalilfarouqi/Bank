@@ -24,6 +24,10 @@ public class BankAccountGraphqlController {
     BankAccountDto bankAccountByRib(@Argument String rib) {
         return bankAccountServiceImpl.getBankAccountByRib(rib);
     }
+    @QueryMapping
+    List<BankAccountDto> bankAccountById(@Argument Long id) {
+        return bankAccountServiceImpl.findByCustomerId(id);
+    }
     @MutationMapping
     public AddBankAccountResponse addBankAccount(@Argument("dto") AddBankAccountRequest dto) {
         return bankAccountServiceImpl.saveBankAccount(dto);

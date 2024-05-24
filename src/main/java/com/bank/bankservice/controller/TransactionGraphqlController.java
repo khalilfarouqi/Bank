@@ -27,4 +27,8 @@ public class TransactionGraphqlController {
     public List<TransactionDto> getTransactions(@Argument GetTransactionListRequest dto) {
         return transactionServiceImpl.getTransactions(dto);
     }
+    @QueryMapping
+    public List<TransactionDto> getTop10TransactionsById(@Argument Long id) {
+        return transactionServiceImpl.getTop10TransactionsById(id);
+    }
 }

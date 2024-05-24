@@ -115,8 +115,15 @@ public class TransactionServiceImpl implements ITransactionService {
     @Override
     public List<TransactionDto> getTransactions(GetTransactionListRequest dto) {
         GetTransactionListBo data = modelMapper.map(dto, GetTransactionListBo.class);
-        return bankAccountTransactionRepository.findByBankAccount_RibAndCreatedAtBetween(
-                        data.getRib(), data.getDateFrom(), data.getDateTo()).
-                stream().map(bo -> modelMapper.map(bo, TransactionDto.class)).collect(Collectors.toList());
+        return bankAccountTransactionRepository.findByBankAccount_RibAndCreatedAtBetween(data.getRib(), data.getDateFrom(), data.getDateTo())
+                .stream()
+                .map(bo ->
+                        modelMapper.map(bo, TransactionDto.class)).collect(Collectors.toList());
+    }
+
+    public List<TransactionDto> getTop10TransactionsById(Long id) {
+        return bankAccountTransactionRepository.getTop10BankAccountTransactionsByBankAccountIdOrderByCreatedAtDesc(id)
+                .stream()
+                .map(bo -> modelMapper.map(bo, TransactionDto.class)).collect(Collectors.toList());
     }
 }

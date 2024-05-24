@@ -10,4 +10,5 @@ import java.util.List;
 @Repository
 public interface BankAccountTransactionRepository extends JpaRepository<BankAccountTransaction, Long> {
     List<BankAccountTransaction> findByBankAccount_RibAndCreatedAtBetween(String rib, Date from, Date to);
+    List<BankAccountTransaction> getTop10BankAccountTransactionsByBankAccountIdOrderByCreatedAtDesc(Long id);
 }
