@@ -12,6 +12,7 @@ type Mutation {
     addBankAccount(dto:AddBankAccountRequest):AddBankAccountResponse
     addWirerTransfer(dto:AddWirerTransferRequest):AddWiredTransferResponse
     updateCustomer(identityRef:String,dto:UpdateCustomerRequest):UpdateCustomerResponse
+    updatePassword(dto:UpdatePasswordRequest):UpdatePasswordResponse,
     deleteCustomer(identityRef:String):String
 }
 type CustomerDto {
@@ -62,6 +63,12 @@ input UpdateCustomerRequest {
     firstname:String,
     lastname:String
 }
+input UpdatePasswordRequest {
+    username:String,
+    actPassword:String,
+    newPassword:String,
+    newPasswordConfirm:String
+}
 type UpdateCustomerResponse {
     id:Int,
     message:String,
@@ -69,6 +76,9 @@ type UpdateCustomerResponse {
     identityRef:String,
     firstname:String,
     lastname:String
+}
+type UpdatePasswordResponse {
+    message:String
 }
 type AddCustomerResponse {
     firstName:String,
