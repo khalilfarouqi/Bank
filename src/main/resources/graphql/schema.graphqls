@@ -9,6 +9,8 @@ type Query{
 }
 type Mutation {
     createCustomer(dto:AddCustomerRequest):AddCustomerResponse
+    signUpCustomer(dto:AddCustomerRequest):AddCustomerResponse
+    signUpUser(dto:AddUserRequest):AddUserResponse
     addBankAccount(dto:AddBankAccountRequest):AddBankAccountResponse
     addWirerTransfer(dto:AddWirerTransferRequest):AddWiredTransferResponse
     updateCustomer(identityRef:String,dto:UpdateCustomerRequest):UpdateCustomerResponse
@@ -58,6 +60,12 @@ input AddCustomerRequest {
     username:String,
     password:String
 }
+input AddUserRequest {
+    firstName:String,
+    lastName:String,
+    userName:String,
+    password:String
+}
 input UpdateCustomerRequest {
     username:String,
     firstname:String,
@@ -88,6 +96,13 @@ type AddCustomerResponse {
     address:String,
     dateOfBirth:String,
     username:String,
+    password:String
+}
+type AddUserResponse {
+    message:String,
+    firstName:String,
+    lastName:String,
+    userName:String,
     password:String
 }
 input AddBankAccountRequest {
