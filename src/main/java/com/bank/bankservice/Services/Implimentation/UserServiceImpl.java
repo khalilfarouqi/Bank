@@ -1,9 +1,12 @@
 package com.bank.bankservice.services.Implimentation;
 
+import com.bank.bankservice.common.dtos.Request.AddUserRequest;
 import com.bank.bankservice.common.dtos.Request.UpdatePasswordRequest;
+import com.bank.bankservice.common.dtos.Response.AddUserResponse;
 import com.bank.bankservice.common.dtos.Response.UpdatePasswordResponse;
 import com.bank.bankservice.common.dtos.UsersDto;
 import com.bank.bankservice.entity.Users;
+import com.bank.bankservice.entity.enums.Profile;
 import com.bank.bankservice.exception.BusinessException;
 import com.bank.bankservice.repository.UserRepository;
 import com.bank.bankservice.services.IUserService;
@@ -74,6 +77,18 @@ public class UserServiceImpl implements IUserService {
             throw new BusinessException("Utilisateur non trouvé");
         }
         return updatePasswordResponse;
+    }
+
+    @Override
+    public AddUserResponse signUpUser(AddUserRequest addUserRequest) {
+        Users user = modelMapper.map(addUserRequest, Users.class);
+        String username = user.getUserName();
+        user.setProfile(Profile.AGENT_GUICHET);
+        userRepository.findByUserName(username)
+                .ifPresent(a ->{
+                    throw new BusinessException(String.format("The username [%s] is already used", username));
+                });
+        return modelMapper.map(userRepository.save(user), AddUserResponse.class);
     }
 
     public Optional<Users> findByPassword(String password) {

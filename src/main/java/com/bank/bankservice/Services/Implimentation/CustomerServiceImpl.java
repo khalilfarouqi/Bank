@@ -74,6 +74,38 @@ public class CustomerServiceImpl implements ICustomerService {
     }
 
     @Override
+    public AddCustomerResponse signUpCustomer(AddCustomerRequest addCustomerRequest) {
+        Customer customer = modelMapper.map(addCustomerRequest, Customer.class);
+        String identityRef = customer.getIdentityRef();
+        String username = customer.getUserName();
+        String email = customer.getEmail();
+        customer.setProfile(Profile.CLIENT);
+        customerRepository.findByIdentityRef(identityRef)
+                .ifPresent(a ->{
+                    throw new BusinessException(String.format("Customer with the same identity [%s] exist", identityRef));
+                });
+        customerRepository.findByEmail(email)
+                .ifPresent(a ->{
+                    throw new BusinessException(String.format("Customer with the same email [%s] exist", email));
+                });
+        customerRepository.findByUserName(username)
+                .ifPresent(a ->{
+                    throw new BusinessException(String.format("The username [%s] is already used", username));
+                });
+        AddCustomerResponse response = modelMapper.map(customerRepository.save(customer), AddCustomerResponse.class);
+        response.setMessage(String.format("Customer : [identity= %s,First Name= %s, Last Name= %s, username= %s] was created with success",
+                response.getIdentityRef(), response.getFirstName(), response.getLastName(), response.getUsername()));
+
+        try {
+            mailService.sendLoginPasswordMail(email, jsonProperties.getNewCustomerSubject().replaceAll("[\",]", ""), response);
+        } catch (Exception e) {
+            throw new RuntimeException(e.getMessage());
+        }
+
+        return response;
+    }
+
+    @Override
     public UpdateCustomerResponse updateCustomer(String identityRef, UpdateCustomerRequest updateCustomerRequest) {
         Customer customerToPersist = modelMapper.map(updateCustomerRequest, Customer.class);
         Customer customerFound = customerRepository.findAll().stream().filter(bo ->
