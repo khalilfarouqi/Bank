@@ -31,6 +31,10 @@ public class CustomerGraphqlController {
         return customerServiceImpl.createCustomer(dto);
     }
     @MutationMapping
+    public AddCustomerResponse signUpCustomer(@Argument("dto") AddCustomerRequest dto) {
+        return customerServiceImpl.signUpCustomer(dto);
+    }
+    @MutationMapping
     public UpdateCustomerResponse updateCustomer(@Argument("identityRef") String identityRef, @Argument("dto")
     UpdateCustomerRequest dto) {
         return customerServiceImpl.updateCustomer(identityRef, dto);
