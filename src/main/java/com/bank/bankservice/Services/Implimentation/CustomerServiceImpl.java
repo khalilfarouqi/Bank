@@ -5,6 +5,7 @@ import com.bank.bankservice.common.config.SecurityConfig;
 import com.bank.bankservice.entity.enums.Profile;
 import com.bank.bankservice.mail.services.MailService;
 import com.bank.bankservice.repository.CustomerRepository;
+import com.bank.bankservice.repository.UserRepository;
 import com.bank.bankservice.services.ICustomerService;
 import com.bank.bankservice.common.dtos.CustomerDto;
 import com.bank.bankservice.common.dtos.Request.AddCustomerRequest;
@@ -16,6 +17,7 @@ import com.bank.bankservice.exception.BusinessException;
 import jakarta.transaction.*;
 import lombok.AllArgsConstructor;
 import org.modelmapper.ModelMapper;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.*;
 
 import java.util.List;
@@ -31,6 +33,8 @@ public class CustomerServiceImpl implements ICustomerService {
     private final ModelMapper modelMapper;
     private final JsonProperties jsonProperties;
     private final SecurityConfig securityConfig;
+    @Autowired
+    private UserRepository userRepository;
 
     //@Autowired
     //private PasswordEncoder passwordEncoder;
