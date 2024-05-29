@@ -12,17 +12,16 @@ import com.bank.bankservice.repository.UserRepository;
 import com.bank.bankservice.services.IUserService;
 import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
-import org.apache.catalina.User;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @Service
 @Transactional
 @AllArgsConstructor
 public class UserServiceImpl implements IUserService {
+
     private final UserRepository userRepository;
     private ModelMapper modelMapper;
 
@@ -89,9 +88,5 @@ public class UserServiceImpl implements IUserService {
                     throw new BusinessException(String.format("The username [%s] is already used", username));
                 });
         return modelMapper.map(userRepository.save(user), AddUserResponse.class);
-    }
-
-    public Optional<Users> findByPassword(String password) {
-        return userRepository.findByPassword(password);
     }
 }
