@@ -4,6 +4,7 @@ type Query{
     bankAccounts:[BankAccountDto]
     bankAccountByRib (rib:String):BankAccountDto
     bankAccountById (id:ID):[BankAccountDto]
+    bankAccountByUsername (username:String):[BankAccountDto]
     getTop10TransactionsById (id:ID):[TransactionDto]
     getTransactions (dto:GetTransactionListRequest):[TransactionDto]
 }

@@ -59,6 +59,12 @@ public class BankAccountServiceImpl implements IBankAccountService {
                 .collect(Collectors.toList());
     }
 
+    public List<BankAccountDto> findByCustomerUserName(String username) {
+        return bankAccountRepository.findByCustomerUserName(username).stream()
+                .map(bankAccount -> modelMapper.map(bankAccount, BankAccountDto.class))
+                .collect(Collectors.toList());
+    }
+
     @Override
     public List<BankAccountDto> getAll() {
         return null;

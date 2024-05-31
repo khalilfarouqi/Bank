@@ -28,6 +28,10 @@ public class BankAccountGraphqlController {
     List<BankAccountDto> bankAccountById(@Argument Long id) {
         return bankAccountServiceImpl.findByCustomerId(id);
     }
+    @QueryMapping
+    List<BankAccountDto> bankAccountByUsername(@Argument String username) {
+        return bankAccountServiceImpl.findByCustomerUserName(username);
+    }
     @MutationMapping
     public AddBankAccountResponse addBankAccount(@Argument("dto") AddBankAccountRequest dto) {
         return bankAccountServiceImpl.saveBankAccount(dto);
