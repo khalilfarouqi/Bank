@@ -13,8 +13,8 @@ import com.bank.bankservice.services.IUserService;
 import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import org.modelmapper.ModelMapper;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
-
 import java.util.*;
 
 @Service
@@ -23,6 +23,8 @@ import java.util.*;
 public class UserServiceImpl implements IUserService {
 
     private final UserRepository userRepository;
+    private final BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+
     private ModelMapper modelMapper;
 
     @Override
@@ -64,10 +66,10 @@ public class UserServiceImpl implements IUserService {
         Optional<Users> optionalUser = userRepository.findByUserName(updatePasswordRequest.getUsername());
         if (optionalUser.isPresent()) {
             Users user = optionalUser.get();
-            if (user.getPassword().equals(updatePasswordRequest.getActPassword())) {
+            if (encoder.matches(updatePasswordRequest.getActPassword(), user.getPassword())) {
                 if (!updatePasswordRequest.getNewPassword().equals(updatePasswordRequest.getNewPasswordConfirm()))
                     throw new BusinessException("Les nouveaux mots de passe ne correspondent pas.");
-                user.setPassword(updatePasswordRequest.getNewPassword());
+                user.setPassword(encoder.encode(updatePasswordRequest.getNewPassword()));
                 update(modelMapper.map(user, UsersDto.class));
                 updatePasswordResponse.setMessage("Password updated successfully");
             } else
@@ -83,6 +85,7 @@ public class UserServiceImpl implements IUserService {
         Users user = modelMapper.map(addUserRequest, Users.class);
         String username = user.getUserName();
         user.setProfile(Profile.AGENT_GUICHET);
+        user.setPassword(encoder.encode(addUserRequest.getPassword()));
         userRepository.findByUserName(username)
                 .ifPresent(a ->{
                     throw new BusinessException(String.format("The username [%s] is already used", username));

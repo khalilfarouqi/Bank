@@ -4,7 +4,6 @@ import com.bank.bankservice.common.dtos.CustomerDto;
 import com.bank.bankservice.common.dtos.Request.*;
 import com.bank.bankservice.common.dtos.Response.*;
 import com.bank.bankservice.services.Implimentation.CustomerServiceImpl;
-import lombok.AllArgsConstructor;
 import org.springframework.graphql.data.method.annotation.*;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.CrossOrigin;

@@ -15,7 +15,7 @@ type Mutation {
     addBankAccount(dto:AddBankAccountRequest):AddBankAccountResponse
     addWirerTransfer(dto:AddWirerTransferRequest):AddWiredTransferResponse
     updateCustomer(identityRef:String,dto:UpdateCustomerRequest):UpdateCustomerResponse
-    updatePassword(dto:UpdatePasswordRequest):UpdatePasswordResponse,
+    updatePassword(dto:UpdatePasswordRequest):UpdatePasswordResponse
     deleteCustomer(identityRef:String):String
 }
 type CustomerDto {

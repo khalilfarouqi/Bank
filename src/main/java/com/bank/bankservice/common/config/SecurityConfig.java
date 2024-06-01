@@ -23,7 +23,7 @@ import java.util.Random;
 @EnableWebSecurity
 public class SecurityConfig {
 
-    private static final String CHARACTERS = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*()-_+=<>?";
+    public static final String CHARACTERS = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*()-_+=<>?";
 
     private static final int PASSWORD_LENGTH = 12;
 

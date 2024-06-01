@@ -5,7 +5,6 @@ import com.bank.bankservice.common.config.SecurityConfig;
 import com.bank.bankservice.entity.enums.Profile;
 import com.bank.bankservice.mail.services.MailService;
 import com.bank.bankservice.repository.CustomerRepository;
-import com.bank.bankservice.repository.UserRepository;
 import com.bank.bankservice.services.ICustomerService;
 import com.bank.bankservice.common.dtos.CustomerDto;
 import com.bank.bankservice.common.dtos.Request.AddCustomerRequest;
@@ -17,7 +16,7 @@ import com.bank.bankservice.exception.BusinessException;
 import jakarta.transaction.*;
 import lombok.AllArgsConstructor;
 import org.modelmapper.ModelMapper;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.*;
 
 import java.util.List;
@@ -33,11 +32,7 @@ public class CustomerServiceImpl implements ICustomerService {
     private final ModelMapper modelMapper;
     private final JsonProperties jsonProperties;
     private final SecurityConfig securityConfig;
-    @Autowired
-    private UserRepository userRepository;
-
-    //@Autowired
-    //private PasswordEncoder passwordEncoder;
+    private final BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
 
     public List<CustomerDto> getAllCustomers() {
         return customerRepository.findAll().stream()
@@ -50,7 +45,7 @@ public class CustomerServiceImpl implements ICustomerService {
         String identityRef = customer.getIdentityRef();
         String username = customer.getUserName();
         String email = customer.getEmail();
-        customer.setPassword(securityConfig.generateRandomPassword());
+        customer.setPassword(encoder.encode(securityConfig.generateRandomPassword()));
         customer.setProfile(Profile.CLIENT);
         customerRepository.findByIdentityRef(identityRef)
                 .ifPresent(a ->{
@@ -84,6 +79,7 @@ public class CustomerServiceImpl implements ICustomerService {
         String username = customer.getUserName();
         String email = customer.getEmail();
         customer.setProfile(Profile.CLIENT);
+        customer.setPassword(encoder.encode(addCustomerRequest.getPassword()));
         customerRepository.findByIdentityRef(identityRef)
                 .ifPresent(a ->{
                     throw new BusinessException(String.format("Customer with the same identity [%s] exist", identityRef));
