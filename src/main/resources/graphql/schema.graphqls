@@ -1,7 +1,8 @@
 type Query{
     customers:[CustomerDto]
-    customerByIdentity(identity:String):CustomerDto
+    transactions:[TransactionDto]
     bankAccounts:[BankAccountDto]
+    customerByIdentity(identity:String):CustomerDto
     bankAccountByRib (rib:String):BankAccountDto
     bankAccountById (id:ID):[BankAccountDto]
     bankAccountByUsername (username:String):[BankAccountDto]
@@ -24,6 +25,8 @@ type CustomerDto {
     firstName:String,
     lastName:String,
     address:String,
+    email:String,
+    dateOfBirth:String
 }
 type BankAccountDto {
     id: String,

@@ -1,5 +1,6 @@
 package com.bank.bankservice.services.Implimentation;
 
+import com.bank.bankservice.common.dtos.CustomerDto;
 import com.bank.bankservice.repository.*;
 import com.bank.bankservice.services.ITransactionService;
 import com.bank.bankservice.common.dtos.Request.*;
@@ -125,5 +126,12 @@ public class TransactionServiceImpl implements ITransactionService {
         return bankAccountTransactionRepository.getTop10BankAccountTransactionsByBankAccountIdOrderByCreatedAtDesc(id)
                 .stream()
                 .map(bo -> modelMapper.map(bo, TransactionDto.class)).collect(Collectors.toList());
+    }
+
+    public List<TransactionDto> getAllTransactions() {
+        return bankAccountTransactionRepository.findAll()
+                .stream()
+                .map(transaction -> modelMapper.map(transaction, TransactionDto.class))
+                .collect(Collectors.toList());
     }
 }

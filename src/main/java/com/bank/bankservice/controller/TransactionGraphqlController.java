@@ -19,6 +19,10 @@ import java.util.List;
 public class TransactionGraphqlController {
     private TransactionServiceImpl transactionServiceImpl;
     private CommonTools commonTools;
+    @QueryMapping
+    public List<TransactionDto> transactions() {
+        return transactionServiceImpl.getAllTransactions();
+    }
     @MutationMapping
     public AddWirerTransferResponse addWirerTransfer(@Argument("dto") AddWirerTransferRequest dto) {
         return transactionServiceImpl.wiredTransfer(dto);
