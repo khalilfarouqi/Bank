@@ -27,11 +27,11 @@ public class MailService {
         this.fromEmail = fromEmail;
     }
 
-    public void sendLoginPasswordMail(String to, String subject, AddCustomerResponse response) throws Exception {
+    public void sendLoginPasswordMail(String to, String subject, AddCustomerResponse response, String password) throws Exception {
         Map<String, Object> model = new HashMap<>();
         model.put("clientName", response.getFirstName() + " " + response.getLastName());
         model.put("username", response.getUsername());
-        model.put("tempPassword", response.getPassword());
+        model.put("tempPassword", password);
 
         String toAddress = to;
         String fromAddress = fromEmail;

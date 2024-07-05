@@ -45,7 +45,8 @@ public class CustomerServiceImpl implements ICustomerService {
         String identityRef = customer.getIdentityRef();
         String username = customer.getUserName();
         String email = customer.getEmail();
-        customer.setPassword(encoder.encode(securityConfig.generateRandomPassword()));
+        String password = securityConfig.generateRandomPassword();
+        customer.setPassword(encoder.encode(password));
         customer.setProfile(Profile.CLIENT);
         customerRepository.findByIdentityRef(identityRef)
                 .ifPresent(a ->{
@@ -64,7 +65,7 @@ public class CustomerServiceImpl implements ICustomerService {
                 response.getIdentityRef(), response.getFirstName(), response.getLastName(), response.getUsername()));
 
         try {
-            mailService.sendLoginPasswordMail(email, jsonProperties.getNewCustomerSubject().replaceAll("[\",]", ""), response);
+            mailService.sendLoginPasswordMail(email, jsonProperties.getNewCustomerSubject().replaceAll("[\",]", ""), response, password);
         } catch (Exception e) {
             throw new RuntimeException(e.getMessage());
         }
@@ -78,8 +79,9 @@ public class CustomerServiceImpl implements ICustomerService {
         String identityRef = customer.getIdentityRef();
         String username = customer.getUserName();
         String email = customer.getEmail();
+        String password = addCustomerRequest.getPassword();
         customer.setProfile(Profile.CLIENT);
-        customer.setPassword(encoder.encode(addCustomerRequest.getPassword()));
+        customer.setPassword(encoder.encode(password));
         customerRepository.findByIdentityRef(identityRef)
                 .ifPresent(a ->{
                     throw new BusinessException(String.format("Customer with the same identity [%s] exist", identityRef));
@@ -97,7 +99,7 @@ public class CustomerServiceImpl implements ICustomerService {
                 response.getIdentityRef(), response.getFirstName(), response.getLastName(), response.getUsername()));
 
         try {
-            mailService.sendLoginPasswordMail(email, jsonProperties.getNewCustomerSubject().replaceAll("[\",]", ""), response);
+            mailService.sendLoginPasswordMail(email, jsonProperties.getNewCustomerSubject().replaceAll("[\",]", ""), response, password);
         } catch (Exception e) {
             throw new RuntimeException(e.getMessage());
         }
