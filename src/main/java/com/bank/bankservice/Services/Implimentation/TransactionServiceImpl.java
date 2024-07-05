@@ -1,6 +1,5 @@
 package com.bank.bankservice.services.Implimentation;
 
-import com.bank.bankservice.common.dtos.CustomerDto;
 import com.bank.bankservice.repository.*;
 import com.bank.bankservice.services.ITransactionService;
 import com.bank.bankservice.common.dtos.Request.*;
@@ -16,6 +15,7 @@ import com.bank.bankservice.exception.BusinessException;
 import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import org.modelmapper.ModelMapper;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
@@ -129,7 +129,7 @@ public class TransactionServiceImpl implements ITransactionService {
     }
 
     public List<TransactionDto> getAllTransactions() {
-        return bankAccountTransactionRepository.findAll()
+        return bankAccountTransactionRepository.findAll(Sort.by(Sort.Direction.DESC, "createdAt"))
                 .stream()
                 .map(transaction -> modelMapper.map(transaction, TransactionDto.class))
                 .collect(Collectors.toList());

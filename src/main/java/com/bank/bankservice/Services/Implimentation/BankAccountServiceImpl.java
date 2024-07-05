@@ -13,6 +13,7 @@ import com.bank.bankservice.exception.BusinessException;
 import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import org.modelmapper.ModelMapper;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
@@ -42,7 +43,8 @@ public class BankAccountServiceImpl implements IBankAccountService {
 
     @Override
     public List<BankAccountDto> getAllBankAccounts() {
-        return bankAccountRepository.findAll().stream()
+        return bankAccountRepository.findAll(Sort.by(Sort.Direction.DESC, "createdAt"))
+                .stream()
                 .map(bankAccount -> modelMapper.map(bankAccount, BankAccountDto.class))
                 .collect(Collectors.toList());
     }
